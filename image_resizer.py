@@ -1,4 +1,5 @@
 from PIL import Image
+import os
 
 def resize_images(images, target_width, target_height):
     """
@@ -21,17 +22,46 @@ def resize_images(images, target_width, target_height):
         
     return resized_images
 
+def resize_images_in_folder(folder_path, target_width, target_height):
+    """
+    Resizes all images in a specified folder to uniform dimensions for thumbnails.
+    
+    Parameters:
+    folder_path (str): The path to the folder containing images.
+    target_width (int): Desired width for the thumbnail.
+    target_height (int): Desired height for the thumbnail.
+    
+    Returns:
+    None: Saves resized images in the same folder with a 'thumbnail_' prefix.
+    """
+    # Check if the folder exists
+    if not os.path.isdir(folder_path):
+        print("Folder path is invalid. Please check the path and try again.")
+        return
+    
+    # Process each image file in the folder
+    for filename in os.listdir(folder_path):
+        if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.gif')):
+            image_path = os.path.join(folder_path, filename)
+            with Image.open(image_path) as img:
+                # Resize the image to the target dimensions using LANCZOS for high quality
+                resized_image = img.resize((target_width, target_height), Image.LANCZOS)
+                
+                # Save the resized image with a 'thumbnail_' prefix
+                save_path = os.path.join(folder_path, f"thumbnail_{filename}")
+                resized_image.save(save_path)
+                print(f"Thumbnail saved as {save_path}")
+
 # Example usage:
 # Assuming `list_of_images` is a list of Image objects already loaded
 # resized_thumbnails = resize_images(list_of_images, 100, 100)
 if __name__ == "__main__":
-    # Load an image (make sure you have an image named 'sample.jpg' in your folder)
-    original_image = Image.open("images/sample.jpg")
-    list_of_images = [original_image]  # Add to a list to match our function's input type
+    # Ask the user to input the folder path
+    folder_path = input("Enter the folder path containing images: ")
     
-    # Resize the image to 100x100 pixels
-    resized_thumbnails = resize_images(list_of_images, 100, 100)
+    # Set target dimensions for the thumbnails
+    target_width = 100
+    target_height = 100
     
-    # Save the resized image to verify
-    resized_thumbnails[0].save("images/thumbnail_sample.jpg")
-    print("Thumbnail saved as 'thumbnail_sample.jpg'")
+    # Resize images in the specified folder
+    resize_images_in_folder(folder_path, target_width, target_height)
