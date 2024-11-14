@@ -1,27 +1,5 @@
 from PIL import Image
 import os
-
-def resize_images(images, target_width, target_height):
-    """
-    Resizes a list of images to uniform dimensions for thumbnails.
-    
-    Parameters:
-    images (list): List of PIL Image objects.
-    target_width (int): Desired width for the thumbnail.
-    target_height (int): Desired height for the thumbnail.
-    
-    Returns:
-    list: List of resized PIL Image objects.
-    """
-    resized_images = []
-    
-    for image in images:
-        # Resize the image to the target dimensions using LANCZOS for high quality
-        resized_image = image.resize((target_width, target_height), Image.LANCZOS)
-        resized_images.append(resized_image)
-        
-    return resized_images
-
 def resize_images_in_folder(folder_path, target_width, target_height):
     """
     Resizes all images in a specified folder to uniform dimensions for thumbnails.
