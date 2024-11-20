@@ -1,7 +1,5 @@
 from PIL import Image
 import os
-from PIL import Image
-import os
 
 def resize_images_in_folder(folder_path, target_width, target_height):
     """

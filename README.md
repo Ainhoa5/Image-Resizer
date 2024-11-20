@@ -1,4 +1,3 @@
-+++markdown
 # Image Resizer for Uniform Thumbnails
 
 This repository contains a Python script to resize a list of images to uniform thumbnail dimensions, ideal for web galleries, portfolios, or applications requiring consistent image display. The script uses the `Pillow` library to process images, ensuring high-quality results.
